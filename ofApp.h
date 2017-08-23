@@ -69,4 +69,6 @@ class ofApp : public ofBaseApp{
 		ofEasyCam cam;
 		ofImage frame_img;
 		ofColor rect_color;
+		int random_value;
+		int rect_deg;
 };

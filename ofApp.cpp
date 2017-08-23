@@ -14,6 +14,7 @@ void ofApp::setup() {
 	this->face_cascade.load("D:\\opencv-3.3.0\\build\\install\\etc\\haarcascades\\haarcascade_frontalface_default.xml");
 
 	this->rect_color.setHsb(ofRandom(255), 255, 255);
+	this->random_value = 3;
 }
 
 //--------------------------------------------------------------
@@ -44,11 +45,25 @@ void ofApp::draw() {
 
 	if (faces.size() == 0) {
 		this->rect_color.setHsb(ofRandom(255), 255, 255);
+		this->random_value = (int)ofRandom(3, 8);
 	}
 
 	for (cv::Rect r : faces){
 		ofSetColor(this->rect_color);
-		ofRect(ofVec3f(-this->frame_img.getWidth() / 2 + r.x, -r.y, 0), r.size().width, r.size().height);
+
+		int i_span = 360 / this->random_value;
+
+		ofTranslate(ofVec3f(-this->frame_img.getWidth() / 2 + r.x + r.size().width / 2, -r.y + r.size().height / 2, 0));
+		ofRotate(ofGetFrameNum() % 360);
+		ofBeginShape();
+		for (int i = 0; i < 360; i += i_span) {
+			float x = r.size().width / 1.5 * cos(i * DEG_TO_RAD);
+			float y = r.size().width / 1.5 * sin(i * DEG_TO_RAD);
+			ofVertex(x, y);
+		}
+		ofEndShape();
+
+		//ofRect(ofVec3f(-this->frame_img.getWidth() / 2 + r.x, -r.y, 0), r.size().width, r.size().height);
 		cout << "x = " << r.x << " y = " << r.y << endl;
 	}
 
