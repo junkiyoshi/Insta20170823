@@ -70,5 +70,4 @@ class ofApp : public ofBaseApp{
 		ofImage frame_img;
 		ofColor rect_color;
 		int random_value;
-		int rect_deg;
 };
